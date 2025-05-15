@@ -10,6 +10,8 @@ module.exports = defineConfig({
 
       // implement node event listeners here
     },
+    video: true,
+    screenshotOnRunFailure: true,
      env: {
     allure: true,
   },
