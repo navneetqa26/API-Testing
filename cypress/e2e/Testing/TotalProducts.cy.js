@@ -26,13 +26,10 @@ describe('AutomationExercise - Product Count Test', () => {
     it.only ('Searches for Tshirt and asserts product names contain tshirt', () => {
     cy.visit('https://automationexercise.com/');
 
-    // Navigate to Products page
     cy.get('a[href="/products"]').click();
 
-    // Search for 'Tshirt' in the search bar on products page
     cy.get('#search_product').type('Tshirt{enter}');
 
-    // Assert each product name contains 'tshirt' (case-insensitive)
      cy.get('.features_items .productinfo p').each(($el) => {
       const productName = $el.text().toLowerCase();
       expect(productName, `Expected "${productName}" to include "tshirt"`).to.include('tshirt');
