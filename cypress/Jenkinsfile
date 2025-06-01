@@ -1,10 +1,30 @@
 pipeline {
   agent any
 
+  tools {
+    nodejs 'NodeJS 18' // make sure you have this Node version set up in Jenkins tools
+  }
+
+  environment {
+    ALLURE_RESULTS = 'allure-results'
+  }
+
   stages {
-    stage('Run Tests') {
+    stage('Checkout Code') {
       steps {
-        sh 'npx cypress run' // or your test command
+        git 'https://github.com/navneetqa26/API-Testing'
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        sh 'npm ci' // installs Cypress, Allure plugin, etc.
+      }
+    }
+
+    stage('Run Cypress Tests') {
+      steps {
+        sh 'npx cypress run'
       }
     }
 
@@ -21,6 +41,12 @@ pipeline {
           results: [[path: 'allure-results']]
         ])
       }
+    }
+  }
+
+  post {
+    always {
+      archiveArtifacts artifacts: 'allure-report/**', allowEmptyArchive: true
     }
   }
 }
