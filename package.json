@@ -3,19 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "test": "cypress run",
-  "allure:generate": "npx allure generate allure-results --clean -o allure-report",
-  "allure:open": "npx allure open allure-report",
-  "report:deploy": "npx allure generate allure-results --clean -o allure-report && netlify deploy --prod --dir=allure-report"
-},
-
+    "test": "cypress run",
+    "allure:generate": "npx allure generate allure-results --clean -o allure-report",
+    "allure:open": "npx allure open allure-report",
+    "report:deploy": "npx allure generate allure-results --clean -o allure-report && netlify deploy --prod --dir=allure-report",
+    "allure:report": "npm run merge-report && npm run generate-report"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "@shelex/cypress-allure-plugin": "^2.41.1",
-    "allure-commandline": "^2.34.0"
+    "allure-commandline": "^2.34.0",
+    "cypress": "^14.4.1",
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.4.1",
+    "mochawesome-report-generator": "^6.2.0"
   }
 }
-
