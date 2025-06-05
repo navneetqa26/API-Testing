@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: CypressDemo
 
 on: [push, pull_request]
 
