@@ -4,22 +4,32 @@ on: [push, pull_request]
 
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout full repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: 18
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Verify Cypress cache
-        run: npx cypress verify
+      - name: Run Cypress Tests
+        run: npm run test
 
-      - name: Run Cypress tests
-        run: npx cypress run
+      - name: Generate Allure/Mochawesome Report
+        if: always()
+        run: npm run allure:report
+
+      - name: Upload HTML Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: mochawesome-report
+          path: mochawesome-report
